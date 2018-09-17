@@ -1,0 +1,130 @@
+<div class="item col-xs-4 col-lg-12">
+  <div class="thumbnail card">
+    <div class="img-event">
+      <img class="group list-group-image img-fluid" style="width:400px; height: 250px;" src={{imgLink}} alt="" />
+    </div>
+    <div class="caption card-body">
+        <label >Title:</label>
+      <h4 class=" book-line mw-100 alert alert-success truncate" title="{{bookTitle|titlecase}}">{{bookTitle|titlecase}}</h4>
+      <label >Authors:</label>
+      <div class=" book-line alert alert-info truncate" title="{{author?author:'Unknown' | titlecase}}"> {{author?author:'Unknown' | titlecase}}</div>
+      <label >Published date:</label>
+      <div class="alert alert-info " title="{{publishDate?publishDate : 'Unknown'}}"> {{publishDate?publishDate : 'Unknown'}}</div>
+      <label >Book ID:</label>
+      <div class="book-line alert alert-info truncate" title="{{id}}"> {{id}}</div>
+      <div> </div>
+      <div class="row">
+        <div class="col-xs-12 col-md-6">
+          <p class="lead">
+          </p>
+        </div>
+        <div class=" btn-group col-xs-12 col-md-12">
+          <a class="btn btn-info btn-md" (click)="showEditDialog()">Edit</a>
+          <a class="btn btn-danger btn-md" (click)="showModalDelete = true">Delete</a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit window  -->
+
+<div tabindex="-1" role="dialog" *ngIf="showModalEditForm" class="overlay">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit book</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModalEditForm = false">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="form-group  ">
+          <label >Title:</label>
+          <input type="text" class="form-control" style="max-width: 400px" [(ngModel)]="updatedBookTitle" required>
+        </div>
+        <div class="form-group">
+          <label>Authors:</label>
+          <input type="text" class="form-control" [(ngModel)]="updatedAuthor">
+        </div>
+        <div class="form-group">
+          <label>Publish Date::</label>
+          <input type="date" class="form-control" [(ngModel)]="updatedPublishDate">
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="saveBtn();">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="showModalEditForm = false">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete msg -->
+<div tabindex="-1" role="dialog" *ngIf="showModalDelete" class="overlay">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Delete the book ?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModalDelete = false">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="deleteBtn();">Yes</button>
+        <button type="button" class="btn btn-success" data-dismiss="modal" (click)="showModalDelete = false">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Author error -->
+<div tabindex="-1" role="dialog" *ngIf="showModalAuthorErr" class="center" class="overlay">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-danger">Author field can't be empty</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModalAuthorErr = false">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <button type="button" class="btn btn-success" data-dismiss="modal" (click)="showModalAuthorErr = false">Ok</button>
+    </div>
+  </div>
+</div>
+
+<!-- Title error -->
+<div tabindex="-1" role="dialog" *ngIf="showModalTitleErr" class="overlay">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-danger">Title field can't be empty</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModalTitleErr = false">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <button type="button" class="btn btn-success" data-dismiss="modal" (click)="showModalTitleErr = false">Ok</button>
+    </div>
+  </div>
+</div>
+
+<!-- Empty date error -->
+<div tabindex="-1" role="dialog" *ngIf="showModalDateEmptyErr" class="overlay">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-danger">Publish date field was empty and has been changed to "Unknown"</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModalDateEmptyErr = false">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <button type="button" class="btn btn-success" data-dismiss="modal" (click)="showModalDateEmptyErr = false">Ok</button>
+    </div>
+  </div>
+</div>
+
+
+

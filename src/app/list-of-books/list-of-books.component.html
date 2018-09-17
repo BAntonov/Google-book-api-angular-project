@@ -1,0 +1,137 @@
+<h1 class="text-center">Find books</h1>
+<div col-lg-6 >
+    <div class="input-group">
+      <input type="text" [(ngModel)]="searchInput" class="form-control" placeholder="Book search" aria-label="Book search"
+        aria-describedby="basic-addon2">
+      <div class="input-group-append">
+        <button class="btn btn-success" type="button" (click)="searchBooks()">Search</button>
+      </div>
+    </div>
+    <h2 *ngIf="books" class="text-center">Or create a new book</h2>
+    <button *ngIf="books" class="float-right btn-success" (click)="showModalCreateNewBook=true">Create a new book</button>
+
+</div>
+
+      <!-- Book created msg -->
+      <div tabindex="-1" role="dialog" *ngIf="showModalBookCreated" class="overlay">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title text-danger">A new book has been created </h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModalBookCreated = false">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <button type="button" class="btn btn-success" data-dismiss="modal" (click)="showModalBookCreated = false">Ok</button>
+              </div>
+            </div>
+          </div>
+
+<!-- Create new book -->
+
+<div tabindex="-1" role="dialog" *ngIf="showModalCreateNewBook">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Create a new book</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModalCreateNewBook = false">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="form-group  ">
+          <label data.error.message="Required field!">Title:</label>
+          <input type="text" class="form-control" [(ngModel)]="bookTitle">
+        </div>
+        <div class="form-group">
+          <label>Authors:</label>
+          <input type="text" class="form-control" [(ngModel)]="author">
+        </div>
+        <div class="form-group">
+          <label>Publish Date::</label>
+          <input type="date" class="form-control" [(ngModel)]="publishDate">
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="addBtn();">Add This book</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="showModalCreateNewBook = false">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Title error -->
+<div tabindex="-1" role="dialog" *ngIf="showModalTitleErr" class="overlay">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-danger">Title field can't be empty</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModalTitleErr = false">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <button type="button" class="btn btn-success" data-dismiss="modal" (click)="showModalTitleErr = false">Ok</button>
+          </div>
+        </div>
+      </div>
+
+<!-- Author error -->
+<div tabindex="-1" role="dialog" *ngIf="showModalAuthorErr" class="center" class="overlay">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-danger">Author field was empty and has been changed to "Unknown"</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModalAuthorErr = false">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <button type="button" class="btn btn-success" data-dismiss="modal" (click)="showModalAuthorErr = false">Ok</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty date error -->
+<div tabindex="-1" role="dialog" *ngIf="showModalDateEmptyErr" class="overlay">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-danger">Publish date field was empty and has been changed to "Unknown"</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showModalDateEmptyErr = false">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <button type="button" class="btn btn-success" data-dismiss="modal" (click)="showModalDateEmptyErr = false">Ok</button>
+          </div>
+        </div>
+      </div>
+
+
+<!-- Book item container -->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12 my-3">
+      <div class="pull-right">
+        <div class="btn-group">
+          <button class="btn btn-info" id="list">
+            View style 1
+          </button>
+          <button class="btn btn-danger" id="grid">
+            View style 2
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="products" class="row view-group">
+    <app-book-item *ngFor="let book of books" [bookTitle]="book.volumeInfo.title" [author]="book.volumeInfo.authors"
+      [id]="book.id" [books]="books" [publishDate]="book.volumeInfo.publishedDate" [imgLink]="book.volumeInfo.imageLinks
+              &&book.volumeInfo.imageLinks.smallThumbnail?
+              book.volumeInfo.imageLinks.smallThumbnail:
+              'https://www.usj.es/blogs/universidad-san-jorge/wp-content/uploads/2018/06/libro.png'">
+
+    </app-book-item>
+
+  </div>
+</div>
